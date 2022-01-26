@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import config
 
 
 def crawler(num_page, baseurl):
@@ -8,18 +9,18 @@ def crawler(num_page, baseurl):
     url_lists = []
     price_lists = []
     priceList = []
-
     header = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36',
     }
-
+    classfinder = config.classfinder
+    # Iteration
     while page != num_page:
         url = baseurl + f"?page={page}"
         r = requests.get(url, headers=header)
         soup = BeautifulSoup(r.content, "lxml")
         productList = soup.find_all('li', attrs={
-            'class': [re.compile(r'^product-grid-block-dynamic product-grid-block-dynamic__container')
-                , re.compile(r'^product-grid-product _product')]})
+            'class': [re.compile(classfinder[0])
+                , re.compile(classfinder[1])]})
         # productList.append(soup.find_all('li', attrs = {'class': re.compile(r'^product-grid-product _product')})
         # print(productList)
 

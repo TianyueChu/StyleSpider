@@ -1,9 +1,21 @@
 import schedule
 import time
-from spider import spider
+import sys
+import config
+import spider
 
-schedule.every().day.at("17:20").do(spider,start_point=3,end_point=17)
 
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+def main():
+    start = config.start
+    end = config.end
+    spider.spider(start, end)
+
+
+if __name__ == "__main__":
+    main()
+
+# schedule.every().day.at(config.time).do(spider, start, end)
+
+# while True:
+#   schedule.run_pending()
+#    time.sleep(1)
